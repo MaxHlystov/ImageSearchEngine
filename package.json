@@ -1,0 +1,28 @@
+{
+  "name": "img-search-engine",
+  "version": "1.0.0",
+  "description": "Gives links to images for specified search text",
+  "main": "index.js",
+  "scripts": {
+    "test": "text.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxHlystov/ImageSearchEngine.git"
+  },
+  "keywords": [
+    "search",
+    "image",
+    "api"
+  ],
+  "author": "Maksim Khlystov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxHlystov/ImageSearchEngine/issues"
+  },
+  "homepage": "https://github.com/MaxHlystov/ImageSearchEngine#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.74.0"
+  }
+}

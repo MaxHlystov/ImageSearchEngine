@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Image search engine</title>
+		<meta name="description" content="Image search engine"/>
+		<meta name="author" content="Maksim Khlystov"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+		<link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+	</head>
+</html>
+
+<body>
+	<div class="container-fluid">
+		<h1 class="header">Image search engine</h1>
+		
+		<h3>User stories:</h3>
+		<blockquote>
+			<ul>
+				<li>I can get the image URLs, alt text and page urls for a set of images relating to a given search string.</li>
+				<li>I can paginate through the responses by adding a ?offset=2 parameter to the URL.</li>
+				<li>I can get a list of the most recently submitted search strings.</li>
+			</ul>
+		</blockquote>
+		
+		<h3>Format of the search URL:</h3>
+		<code>https://img-finder.herokuapp.com/img/<u>text to search in url encoding</u>[?offset=<u>number of page with results</u>]</code>
+		
+		<h3>Format of recent requests:</h3>
+		<code>https://img-finder.herokuapp.com/recent</code>
+        
+        <h3>Examples of links:</h3>
+        <ul>
+        	<li>Find "cats": <a href="https://img-finder.herokuapp.com/img/cats">https://img-finder.herokuapp.com/img/cats</a></li>
+        	<li>Next page with found "cats": <a href="https://img-finder.herokuapp.com/img/cats?offset=2">https://img-finder.herokuapp.com/img/cats?offset=2</a></li>
+        	<li>Browse recent search queries: <a href="https://img-finder.herokuapp.com/recent">https://img-finder.herokuapp.com/recent</a></li>
+        </ul>
+        
+        <h3>Example output for cearch results:</h3>
+            <code>
+            [{<br>
+				&nbsp;&nbsp;"url" : "https://i.ytimg.com/vi/tRzXptpC3_U/hqdefault.jpg",<br>
+				&nbsp;&nbsp;"snippet" : "funny lolcats and loldogs",<br>
+				&nbsp;&nbsp;"thumbnail" : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS_dKvb6pMA0bod00g0v1Bk3YakSY7H4HYwpu268AqUK8pPiSdlUh9pEnYh",<br>
+				&nbsp;&nbsp;"context" : "https://www.youtube.com/watch?v=tRzXptpC3_U"<br>
+			}, {<br>
+				&nbsp;&nbsp;"url" : "https://i.ytimg.com/vi/dWpGC6Fg0io/hqdefault.jpg",<br>
+				&nbsp;&nbsp;"snippet" : "... LOLCats Funny Cats",<br>
+				&nbsp;&nbsp;"thumbnail" : "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRNMCLSl2dHm87xTU6uMFZD0Jym2E-4lAaSdJzfc_6OkeB_CdF1vjgZZsR2",<br>
+				&nbsp;&nbsp;"context" : "https://www.youtube.com/watch?v=dWpGC6Fg0io"<br>
+			}]
+            </code>
+            
+        <h3>Example output for recent searches:</h3>
+            <code>
+            [{<br>
+				&nbsp;&nbsp;"term" : "lolcats funny",<br>
+				&nbsp;&nbsp;"when" : "2016-07-23T12:25:03.580Z"<br>
+			}, {<br>
+				&nbsp;&nbsp;"term" : "lolcats funny",<br>
+				&nbsp;&nbsp;"when" : "2016-07-23T11:43:45.083Z"<br>
+			}]
+            </code>
+    </div>
+</body>
