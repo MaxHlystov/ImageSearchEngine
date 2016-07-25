@@ -4,7 +4,9 @@
   "description": "Gives links to images for specified search text",
   "main": "index.js",
   "scripts": {
-    "test": "text.js"
+    "postinstall": "node init.js",
+    "start": "node index.js",
+    "test": "node text.js"
   },
   "repository": {
     "type": "git",
