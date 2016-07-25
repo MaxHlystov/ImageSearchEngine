@@ -1,7 +1,7 @@
 const request = require("request");
 const Pool = require('pg').Pool;
 const dateFormat = require('dateformat');
-
+const url = require("url")
 var model = {};
 
 /*
@@ -9,25 +9,16 @@ var model = {};
 */
 module.exports = (function(subscriptKey){
     
-    // const params = url.parse(process.env.DATABASE_URL);
-    // const auth = params.auth.split(':');
+    const params = url.parse(process.env.DATABASE_URL);
+    const auth = params.auth.split(':');
     
-    // const config = {
-    //   user: auth[0],
-    //   password: auth[1],
-    //   host: params.hostname,
-    //   port: params.port,
-    //   database: params.pathname.split('/')[1],
-    //   ssl: true
-    // };
-
     var config = {
-        host: process.env.DB_HOST || 'localhost',
-        database: process.env.DB_NAME || 'imgsearch',
-        user: process.env.DBUSER,
-        password: process.env.DBPASSWORD,
-        port: process.env.DBPORT || 5432,
-        ssl: false,
+        host: params.hostname || 'localhost',
+        database: params.pathname.split('/')[1] || 'imgsearch',
+        user: auth[0],
+        password: auth[1],
+        port: params.port || 5432,
+        ssl: true,
         max: 20, //set pool max size to 20
         min: 4, //set min pool size to 4
         idleTimeoutMillis: 1000 //close idle clients after 1 second
