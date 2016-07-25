@@ -28,7 +28,7 @@ Example output for cearch results:
 	"snippet" : "... LOLCats Funny Cats",
 	"thumbnail" : "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRNMCLSl2dHm87xTU6uMFZD0Jym2E-4lAaSdJzfc_6OkeB_CdF1vjgZZsR2",
 	"context" : "https://www.youtube.com/watch?v=dWpGC6Fg0io"
-   }]
+  }]
 ```  
 
 Example output for recent searches:  
