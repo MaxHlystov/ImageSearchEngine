@@ -204,6 +204,9 @@ function initDB(callback) {
         .then(res => {
             console.log('Table "queries" created.');
             
+            //"select 1 from pg_indexes where indexname='queries_date_index' limit 1;"
+            
+            
             model.db.query('CREATE INDEX queries_date_index ON queries (date);')
             .then(function() {
                 client.release();
@@ -223,31 +226,4 @@ function initDB(callback) {
             if(callback !== undefined) callback(null);
         });
     });
-
-    // model.db.connect(function(err, client, done) {
-    //     if(err) {
-    //         console.log('Error: ' + err);
-    //         done();
-    //     }
-    //     var query = client.query(
-    //         'CREATE TABLE IF NOT EXISTS queries(' +
-    //         'id SERIAL PRIMARY KEY' +
-    //         ', query VARCHAR(512) not null' +
-    //         ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());');
-    //     query.on('end', function() {
-    //         var query1 = client.query('CREATE INDEX queries_date_index ON queries (date);');
-    //         query1.on('end', function() {
-    //             console.log('End creade database.');
-    //             done();
-    //         });
-    //         query1.on('error', function(err) {
-    //             console.log("Next " + err);
-    //             done();
-    //         });
-    //     });
-    //     query.on('error', function(err) {
-    //         console.log(err);
-    //         done();
-    //     });
-    // });
 }

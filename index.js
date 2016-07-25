@@ -20,7 +20,7 @@ app.get('/recent', (req, res) => {
             res.send("Error search: " + err);
         }
         else{
-            res.send(JSON.stringify(data));
+            res.send(JSON.stringify(data, null, 2));
         }
     });
 });
@@ -42,7 +42,7 @@ app.get('/img/:text', (req, res) => {
                     res.send("Error search: " + err);
                 }
                 else{
-                    res.send(JSON.stringify(data));
+                    res.send(JSON.stringify(data, null, 2));
                 }
             });
         }
