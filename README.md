@@ -19,25 +19,25 @@
 Example output for cearch results:  
 ```
   [{
-		"url" : "https://i.ytimg.com/vi/tRzXptpC3_U/hqdefault.jpg",
-		"snippet" : "funny lolcats and loldogs",
-		"thumbnail" : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS_dKvb6pMA0bod00g0v1Bk3YakSY7H4HYwpu268AqUK8pPiSdlUh9pEnYh",
-		"context" : "https://www.youtube.com/watch?v=tRzXptpC3_U"
-	}, {
-		"url" : "https://i.ytimg.com/vi/dWpGC6Fg0io/hqdefault.jpg",
-		"snippet" : "... LOLCats Funny Cats",
-		"thumbnail" : "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRNMCLSl2dHm87xTU6uMFZD0Jym2E-4lAaSdJzfc_6OkeB_CdF1vjgZZsR2",
-		"context" : "https://www.youtube.com/watch?v=dWpGC6Fg0io"
-	}]
+	"url" : "https://i.ytimg.com/vi/tRzXptpC3_U/hqdefault.jpg",
+	"snippet" : "funny lolcats and loldogs",
+	"thumbnail" : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS_dKvb6pMA0bod00g0v1Bk3YakSY7H4HYwpu268AqUK8pPiSdlUh9pEnYh",
+	"context" : "https://www.youtube.com/watch?v=tRzXptpC3_U"
+   }, {
+	"url" : "https://i.ytimg.com/vi/dWpGC6Fg0io/hqdefault.jpg",
+	"snippet" : "... LOLCats Funny Cats",
+	"thumbnail" : "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRNMCLSl2dHm87xTU6uMFZD0Jym2E-4lAaSdJzfc_6OkeB_CdF1vjgZZsR2",
+	"context" : "https://www.youtube.com/watch?v=dWpGC6Fg0io"
+   }]
 ```  
 
 Example output for recent searches:  
 ```
   [{
-		"term" : "lolcats funny",
-		"when" : "2016-07-23T12:25:03.580Z"
-	}, {
-		"term" : "lolcats funny",
-		"when" : "2016-07-23T11:43:45.083Z"
-	}]
+	"term" : "lolcats funny",
+	"when" : "2016-07-23T12:25:03.580Z"
+   }, {
+	"term" : "lolcats funny",
+	"when" : "2016-07-23T11:43:45.083Z"
+ }]
 ```  
