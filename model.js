@@ -1,7 +1,7 @@
 const request = require("request");
 const Pool = require('pg').Pool;
 const dateFormat = require('dateformat');
-const url = require("url")
+const url = require("url");
 var model = {};
 
 /*
