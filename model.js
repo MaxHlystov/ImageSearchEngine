@@ -1,5 +1,5 @@
 const request = require("request");
-const Pool = require('pg').Pool;
+const Pool = require('pg-pool');
 const dateFormat = require('dateformat');
 const url = require("url");
 var model = {};
@@ -9,7 +9,8 @@ var model = {};
 */
 module.exports = (function(subscriptKey){
     
-    const params = url.parse(process.env.DATABASE_URL);
+    const db_url = process.env.DATABASE_URL || 'postgres://ubuntu:111111@localhost:5432/imgsearch';
+    const params =  url.parse(db_url);
     const auth = params.auth.split(':');
     
     var config = {
@@ -34,9 +35,9 @@ module.exports = (function(subscriptKey){
     model.close = closeConnections;
     
     model.db = new Pool(config);
-    model.db.on('error', function (err, client) {
-        console.error('idle client error', err.message, err.stack);
-    });
+    // model.db.on('unhandledRejection', function(err) {
+    //   console.log('idle client error', err.message, err.stack);
+    // });
 
     return model;
 });
@@ -181,39 +182,72 @@ function saveQuery(search_text, date, callback){
  * @public
  */
 function closeConnections(callback) {
-    callback(null);
+    model.db.end();
+    if(callback !== undefined) callback(null);
 }
 
 
 /**
  * create table 'SearchRequests'.
- * @param{callback} emit function callback when ends.
  * @public
  */
 function initDB(callback) {
     console.log('Start to creade database.');
     
-    model.db.connect(function(err, client, done) {
-        if(err) {
-            console.log('Error: ' + err);
-        }
-        var query = client.query(
+    model.db.connect()
+    .then(client => {
+        client.query(
             'CREATE TABLE IF NOT EXISTS queries(' +
             'id SERIAL PRIMARY KEY' +
             ', query VARCHAR(512) not null' +
-            ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());');
-        query.on('end', function() {
-            var query1 = client.query('CREATE INDEX IF NOT EXISTS queries_date_index ON queries (date);');
-            query1.on('end', function() {
+            ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());')
+        .then(res => {
+            console.log('Table "queries" created.');
+            
+            model.db.query('CREATE INDEX queries_date_index ON queries (date);')
+            .then(function() {
                 client.release();
+                console.log('Idenx for queries table created.');
                 console.log('End creade database.');
+                if(callback !== undefined) callback(null);
+            })
+            .catch(function(err) {
+                client.release();
+                console.log("Error creating index for queries: ", err.message, err.stack);
+                if(callback !== undefined) callback(null);
             });
-            query1.on('error', function(err) {
-                console.log('Error: ' + err);
-            });
-        });
-        query.on('error', function(err) {
-            console.log('Error: ' + err);
+        })
+        .catch(err => {
+            client.release();
+            console.error('Error creating table "queries": ', err.message, err.stack);
+            if(callback !== undefined) callback(null);
         });
     });
+
+    // model.db.connect(function(err, client, done) {
+    //     if(err) {
+    //         console.log('Error: ' + err);
+    //         done();
+    //     }
+    //     var query = client.query(
+    //         'CREATE TABLE IF NOT EXISTS queries(' +
+    //         'id SERIAL PRIMARY KEY' +
+    //         ', query VARCHAR(512) not null' +
+    //         ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());');
+    //     query.on('end', function() {
+    //         var query1 = client.query('CREATE INDEX queries_date_index ON queries (date);');
+    //         query1.on('end', function() {
+    //             console.log('End creade database.');
+    //             done();
+    //         });
+    //         query1.on('error', function(err) {
+    //             console.log("Next " + err);
+    //             done();
+    //         });
+    //     });
+    //     query.on('error', function(err) {
+    //         console.log(err);
+    //         done();
+    //     });
+    // });
 }

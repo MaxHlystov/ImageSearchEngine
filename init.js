@@ -1,3 +1,3 @@
 const model = require("./model")();
 
-model.initDB();
+model.initDB(model.close);
