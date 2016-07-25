@@ -11,10 +11,10 @@
     	[&size=number of search results per page]
 
 ####Format of recent requests:  
-		`https://img-finder.herokuapp.com/recent`
+	`https://img-finder.herokuapp.com/recent`
 		
-####Expamle of app with it:
-	[http://codepen.io/max1c/full/JKvkQq/](http://codepen.io/max1c/full/JKvkQq/)
+####Expamle of app with it:  
+   [http://codepen.io/max1c/full/JKvkQq/](http://codepen.io/max1c/full/JKvkQq/)
 	
 ####Examples of links:  
 * Find "cats": [https://img-finder.herokuapp.com/img/cats](https://img-finder.herokuapp.com/img/cats)
