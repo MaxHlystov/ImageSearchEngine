@@ -6,7 +6,7 @@
 > * I can get a list of the most recently submitted search strings.  
 
 ####Format of the search URL:  
-    https://img-finder.herokuapp.com/img/**text to search in url encoding**\[?offset=**number of page with results**\]
+    https://img-finder.herokuapp.com/img/text to search in url encoding[?offset=number of page with result]
 
 ####Format of recent requests:  
 		`https://img-finder.herokuapp.com/recent`
