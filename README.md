@@ -13,6 +13,9 @@
 ####Format of recent requests:  
 		`https://img-finder.herokuapp.com/recent`
 		
+####Expamle of app with it
+	[Some cats](http://codepen.io/max1c/full/JKvkQq/)
+	
 ####Examples of links:  
 * Find "cats": [https://img-finder.herokuapp.com/img/cats](https://img-finder.herokuapp.com/img/cats)
 * Next page with found "cats": [https://img-finder.herokuapp.com/img/cats?offset=2](https://img-finder.herokuapp.com/img/cats?offset=2)
