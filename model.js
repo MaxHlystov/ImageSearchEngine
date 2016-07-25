@@ -203,7 +203,7 @@ function initDB(callback) {
             ', query VARCHAR(512) not null' +
             ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());');
         query.on('end', function() {
-            var query1 = client.query('CREATE INDEX queries_date_index ON queries (date);');
+            var query1 = client.query('CREATE INDEX IF NOT EXISTS queries_date_index ON queries (date);');
             query1.on('end', function() {
                 client.release();
                 console.log('End creade database.');
