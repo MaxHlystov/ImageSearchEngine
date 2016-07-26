@@ -177,13 +177,13 @@ function saveQuery(search_text, date, callback){
 /**
  * Close all connections to database.
  *
- * @param {callback(err)} call when db closed.
+ * @param {callback()} call when db closed.
  *  If there are no errors return null
  * @public
  */
 function closeConnections(callback) {
     model.db.end();
-    if(callback !== undefined) callback(null);
+    if(typeof(callback) === "function") callback();
 }
 
 
@@ -193,37 +193,33 @@ function closeConnections(callback) {
  */
 function initDB(callback) {
     console.log('Start to creade database.');
-    
+    var local_cl = null;
     model.db.connect()
-    .then(client => {
-        client.query(
+    .then(function(client)  {
+		local_cl = client;
+        return local_cl.query(
             'CREATE TABLE IF NOT EXISTS queries(' +
             'id SERIAL PRIMARY KEY' +
             ', query VARCHAR(512) not null' +
-            ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());')
-        .then(res => {
-            console.log('Table "queries" created.');
-            
-            //"select 1 from pg_indexes where indexname='queries_date_index' limit 1;"
-            
-            
-            model.db.query('CREATE INDEX queries_date_index ON queries (date);')
-            .then(function() {
-                client.release();
-                console.log('Idenx for queries table created.');
-                console.log('End creade database.');
-                if(callback !== undefined) callback(null);
-            })
-            .catch(function(err) {
-                client.release();
-                console.log("Error creating index for queries: ", err.message, err.stack);
-                if(callback !== undefined) callback(null);
-            });
-        })
-        .catch(err => {
-            client.release();
-            console.error('Error creating table "queries": ', err.message, err.stack);
-            if(callback !== undefined) callback(null);
-        });
-    });
+            ', date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW());');
+    })
+    .then(function(res)  {
+        console.log('Table "queries" created.');
+        return local_cl.query("select 1 from pg_indexes where indexname='queries_date_index' limit 1;");
+    })
+    .then(function(res)  {
+		if(res !== undefined && res.rowCount === 0) return local_cl.query('CREATE INDEX queries_date_index ON queries (date);');
+		return null;
+	})
+	.then(function(res) {
+		if(res !== null) console.log('Idenx for queries table created.');
+		console.log('Creade database finished.');
+		local_cl.release();
+		if(typeof(callback) === "function") callback();
+	})
+    .catch(function(err) {
+		console.error('Error init DB: ', err.message, err.stack);
+		if(local_cl !== null) local_cl.release();
+		if(typeof(callback) === "function") callback();
+	});
 }
