@@ -63,31 +63,29 @@ function getImages(search_text, per_page, page_num, callback){
     checkBorders(1, 10, per_page);
     checkBorders(0, 1000, page_num);
 
-    var address = 'https://api.cognitive.microsoft.com/bing/v5.0/images/search'+
-        '?q=' + search_text +
-        '&count=' + per_page +
-        '&offset=' + page_num +
-        '&mkt=en-us' +
+    var address = 'https://pixabay.com/api/' +
+        '?key=' + model.subscriptKey +
+        '&q=' + search_text +
+        '&per_page=' + per_page +
+        '&page=' + page_num +
+        '&lang=en-us' +
         '&safeSearch=Moderate';
     
     request({
         url: address,
-        json: true,
-        headers: {
-            'Ocp-Apim-Subscription-Key': model.subscriptKey
-        }
+        json: true
     }, function (err, res, body) {
         if(err) callback(err, null);
         else if(res.statusCode === 200) {
             try{
                 var arr = []; // result array of objects
                 var waititems = Math.min(per_page, body.value.length);
-                body.value.forEach(function (x){
+                body.hits.forEach(function (x){
                     arr.push({
-                        "url" : x.contentUrl,
-                        "snippet" : x.name,
-                        "thumbnail" : x.thumbnailUrl,
-                        "context" : x.hostPageUrl
+                        "url" : x.webformatURL,
+                        "snippet" : "Cats",
+                        "thumbnail" : x.previewURL,
+                        "context" : x.pageURL,
                     });
                     waititems--;
                     if(waititems === 0) callback(null, arr);
