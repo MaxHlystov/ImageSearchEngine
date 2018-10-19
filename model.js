@@ -60,10 +60,10 @@ module.exports = (function(subscriptKey){
  * @public
  */
 function getImages(search_text, per_page, page_num, callback){
-    checkBorders(1, 10, per_page);
-    checkBorders(0, 1000, page_num);
+    per_page = checkBorders(1, 10, per_page);
+    page_num = checkBorders(1, 1000, page_num);
 
-    var address = 'https://pixabay.com/api/' +
+    var address = 'https://pixabay.com/api' +
         '?key=' + model.subscriptKey +
         '&q=' + search_text +
         '&per_page=' + per_page +
@@ -79,17 +79,20 @@ function getImages(search_text, per_page, page_num, callback){
         else if(res.statusCode === 200) {
             try{
                 var arr = []; // result array of objects
-                var waititems = Math.min(per_page, body.value.length);
-                body.hits.forEach(function (x){
-                    arr.push({
-                        "url" : x.webformatURL,
-                        "snippet" : "Cats",
-                        "thumbnail" : x.previewURL,
-                        "context" : x.pageURL,
+                var hits = body.hits;
+                if(hits != undefined) {
+                    var waititems = Math.min(per_page, hits.length);
+                    body.hits.forEach(function (x){
+                        arr.push({
+                            "url" : x.webformatURL,
+                            "snippet" : "Cats",
+                            "thumbnail" : x.previewURL,
+                            "context" : x.pageURL,
+                        });
+                        waititems--;
+                        if(waititems === 0) callback(null, arr);
                     });
-                    waititems--;
-                    if(waititems === 0) callback(null, arr);
-                });
+                }
             }
             catch(err){
                 callback(err, null);
@@ -101,9 +104,10 @@ function getImages(search_text, per_page, page_num, callback){
 
 
 function checkBorders(min, max, val){
-    if(isNaN(val)) val = max;
-    else if(val > max) val = max;
-    else if(val < min) val = min;
+    if(isNaN(val)) return max;
+    else if(val > max) return max;
+    else if(val < min) return min;
+    return val;
 }
 
 

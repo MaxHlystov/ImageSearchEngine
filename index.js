@@ -1,10 +1,16 @@
 const path = require("path");
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({path: path.join(__dirname, ".env")}); 
+  console.log(process.version);
+}
+
 const express = require("express");
 const model_creator = require("./model");
 
 const port = process.env.PORT || 8080;
 const app = express();
-const model = model_creator(process.env.MSKEY);
+const model = model_creator(process.env.APIKEY);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
