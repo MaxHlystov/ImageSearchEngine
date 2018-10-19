@@ -48,6 +48,7 @@ app.get('/img/:text', (req, res) => {
                     res.send("Error search: " + err);
                 }
                 else{
+                    res.set('Access-Control-Allow-Origin', '*');
                     res.send(JSON.stringify(data, null, 2));
                 }
             });

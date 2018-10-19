@@ -71,6 +71,9 @@ function getImages(search_text, per_page, page_num, callback){
         '&lang=en-us' +
         '&safeSearch=Moderate';
     
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(address);
+    }
     request({
         url: address,
         json: true
@@ -98,7 +101,9 @@ function getImages(search_text, per_page, page_num, callback){
                 callback(err, null);
             }
         }
-        else callback("Error getting data from search engine. Status code: " + res.statusCode);
+        else callback("Error getting data from search engine. Status code: " 
+                + res.statusCode + "\n"
+                + res.body);
     });
 }
 
@@ -161,11 +166,11 @@ function saveQuery(search_text, date, callback){
     var date_text = "'" + dateFormat(date, "yyyy-mm-dd HH:MM:ss") + "'";
     model.db.connect().then(function(client) {
         var query = client.query("INSERT INTO queries(query, date) values($1, $2)", [search_text, date_text]);
-        query.on('end', function () {
+        query.then(() => {
             client.release();
             callback(null);
-        });
-        query.on('error', function (err) {
+        })
+        .catch(function (err) {
             client.release();
             callback(err);
         });
