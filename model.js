@@ -60,8 +60,8 @@ module.exports = (function(subscriptKey){
  * @public
  */
 function getImages(search_text, per_page, page_num, callback){
-    per_page = checkBorders(1, 10, per_page);
-    page_num = checkBorders(1, 1000, page_num);
+    per_page = checkBorders(1, 5, per_page);
+    page_num = checkBorders(1, 100, page_num);
 
     var address = 'https://pixabay.com/api' +
         '?key=' + model.subscriptKey +
